@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.document.demo.feignClient.FeignClient;
+import com.document.demo.model.Comments;
 import com.document.demo.model.Document;
+import com.document.demo.model.Post;
 import com.document.demo.repository.DocRepository;
 
 @Service
@@ -15,6 +18,10 @@ public class DocumentService {
 
 	@Autowired
 	private DocRepository docRepository;
+	
+	@Autowired
+	FeignClient client;
+	
 
 	public Document saveFile(MultipartFile file) {
 
@@ -52,5 +59,16 @@ public class DocumentService {
 			e.printStackTrace();
 		}
 	}
+	
+	public Post createPost(Post post) {
+        return client.createPost(post);
+    }
+		 
+	
+	public Comments createComment(Comments comment){
+		
+		return client.createComment(comment);
+		}
+
 
 }
